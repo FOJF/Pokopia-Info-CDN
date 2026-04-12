@@ -1,3 +1,4 @@
+const fs = require('fs');
 const sharp = require('sharp');
 const glob = require('glob');
 const path = require('path');
@@ -13,7 +14,7 @@ async function optimizeToLosslessWebp() {
   });
 
   console.log(`🚀 총 ${files.length}개의 파일을 무손실 WebP로 변환합니다.`);
-  console.log('💡 품질은 100% 유지되며, 원본 파일은 수정되지 않습니다.');
+  console.log('💡 품질은 100% 유지되며, 변환 후 원본 파일은 삭제됩니다.');
 
   let processedCount = 0;
   let skipCount = 0;
@@ -34,6 +35,10 @@ async function optimizeToLosslessWebp() {
         await sharp(file)
           .webp({ lossless: true, effort: 6 }) // 무손실 압축, 최대 효율
           .toFile(webpPath);
+
+        // 원본 파일 삭제
+        fs.unlinkSync(file);
+        console.log(`🗑️ 원본 파일 삭제 완료: ${file}`);
 
         processedCount++;
         if (processedCount % 100 === 0) {
