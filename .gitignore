@@ -1,0 +1,30 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.settings/
+.classpath
+
+# Build and Temporary files
+tmp/
+temp/
+*.log
+*.tmp
+node_modules/
+dist/
+build/
+
+# Secret / Local Config
+.env
+.env.local
