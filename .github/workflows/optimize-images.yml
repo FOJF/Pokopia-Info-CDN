@@ -1,0 +1,46 @@
+name: Optimize Images to WebP
+
+on:
+  push:
+    paths:
+      - "**/*.png"
+      - "**/*.jpg"
+      - "**/*.jpeg"
+  workflow_dispatch:
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: npm install sharp glob
+
+      - name: Run Image Optimization
+        run: node optimize-images.js
+
+      - name: Cleanup Node Modules and Package Configs
+        run: rm -rf node_modules package.json package-lock.json
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: optimize images to webp and remove originals"
+            git push
+          fi
