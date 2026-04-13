@@ -62,6 +62,9 @@ jobs:
             const repo = context.repo.repo;
             const branch = context.ref ? context.ref.replace('refs/heads/', '') : 'main';
 
+            console.log("Waiting 15 seconds to allow GitHub to propagate changes...");
+            await new Promise(r => setTimeout(r, 15000));
+
             for (const file of modifiedFiles) {
               const url = `https://purge.jsdelivr.net/gh/${owner}/${repo}@${branch}/${file}`;
               console.log(`Sending purge request for: ${file}`);
