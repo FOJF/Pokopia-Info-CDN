@@ -1,6 +1,6 @@
 # Pokopia-Info-CDN
 
-Pokopia-Info-CDN은 포코피아(Pokopia) 관련 에셋(배지, 아이템, 포켓몬 등)을 저장하고 제공하는 이미지 CDN 리포지토리입니다.
+Pokopia-Info-CDN은 [pokopia-info.vercel.app](https://pokopia-info.vercel.app) 서비스를 위한 포코피아(Pokopia) 관련 에셋(배지, 아이템, 포켓몬 등)을 저장하고 제공하는 이미지 CDN 리포지토리입니다.
 
 ## 기능
 
