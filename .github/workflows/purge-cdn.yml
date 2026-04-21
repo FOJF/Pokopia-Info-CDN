@@ -65,6 +65,9 @@ jobs:
             console.log("Waiting 15 seconds to allow GitHub to propagate changes...");
             await new Promise(r => setTimeout(r, 15000));
 
+            let successCount = 0;
+            let failCount = 0;
+
             for (const file of modifiedFiles) {
               const url = `https://purge.jsdelivr.net/gh/${owner}/${repo}@${branch}/${file}`;
               console.log(`Sending purge request for: ${file}`);
@@ -74,11 +77,23 @@ jobs:
                 if (res.ok) {
                   console.log(`✅ Successfully purged: ${file}`);
                   console.log(`   Response: ${text}`);
+                  successCount++;
                 } else {
                   console.error(`❌ Failed to purge: ${file} (HTTP ${res.status})`);
                   console.error(`   Response: ${text}`);
+                  failCount++;
                 }
               } catch (error) {
                 console.error(`❌ Error purging ${file}: ${error.message}`);
+                failCount++;
               }
+            }
+
+            console.log("\n🚀 Purge Summary:");
+            console.log(`✅ Success: ${successCount}`);
+            console.log(`❌ Failed: ${failCount}`);
+            console.log(`📊 Total: ${modifiedFiles.length}`);
+
+            if (failCount > 0) {
+              core.setFailed(`${failCount} purge requests failed.`);
             }
