@@ -28,3 +28,4 @@ build/
 # Secret / Local Config
 .env
 .env.local
+pokemon_copy/
